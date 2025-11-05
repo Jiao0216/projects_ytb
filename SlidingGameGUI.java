@@ -4,7 +4,7 @@ import java.awt.event.*;
 import java.util.*;
 
 public class SlidingGameGUI extends JFrame implements ActionListener {
-    private final int SIZE = 3; // 3x3 拼图
+    private final int SIZE = 3; // 3x3 puzzle
     private JButton[][] buttons = new JButton[SIZE][SIZE];
     private int[][] board = new int[SIZE][SIZE];
     private int emptyRow, emptyCol;
@@ -17,12 +17,12 @@ public class SlidingGameGUI extends JFrame implements ActionListener {
         setSize(300, 350);
         setLocationRelativeTo(null);
 
-        // 创建棋盘面板
+        // Create Panel
         JPanel boardPanel = new JPanel();
         boardPanel.setLayout(new GridLayout(SIZE, SIZE));
         Font font = new Font("Arial", Font.BOLD, 28);
 
-        // 初始化按钮
+        // Initialize buttons
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
                 buttons[i][j] = new JButton();
@@ -32,7 +32,7 @@ public class SlidingGameGUI extends JFrame implements ActionListener {
             }
         }
 
-        // 重置按钮
+        // Reset buttons
         resetButton = new JButton("Reset");
         resetButton.addActionListener(e -> initBoard());
 
@@ -43,7 +43,7 @@ public class SlidingGameGUI extends JFrame implements ActionListener {
         setVisible(true);
     }
 
-    // 初始化棋盘
+    // Initialize board
     private void initBoard() {
         ArrayList<Object> numbers = new ArrayList<>();
         for (int i = 0; i < SIZE * SIZE; i++) numbers.add(i);
@@ -62,7 +62,7 @@ public class SlidingGameGUI extends JFrame implements ActionListener {
         updateButtons();
     }
 
-    // 更新界面显示
+    // Update background
     private void updateButtons() {
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
@@ -76,14 +76,13 @@ public class SlidingGameGUI extends JFrame implements ActionListener {
             }
         }
     }
-
-    // 点击按钮事件
+    // Press button event
     @Override
     public void actionPerformed(ActionEvent e) {
         JButton clicked = (JButton) e.getSource();
         int row = -1, col = -1;
 
-        // 找到被点击的按钮位置
+        // find the place pressing
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
                 if (buttons[i][j] == clicked) {
@@ -93,7 +92,7 @@ public class SlidingGameGUI extends JFrame implements ActionListener {
             }
         }
 
-        // 检查是否可移动
+        // check if it can move
         if (Math.abs(row - emptyRow) + Math.abs(col - emptyCol) == 1) {
             board[emptyRow][emptyCol] = board[row][col];
             board[row][col] = 0;
@@ -106,7 +105,7 @@ public class SlidingGameGUI extends JFrame implements ActionListener {
         }
     }
 
-    // 检查是否完成
+    // check if complete
     private boolean isSolved() {
         int count = 1;
         for (int i = 0; i < SIZE; i++) {
